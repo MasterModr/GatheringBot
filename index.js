@@ -8,6 +8,7 @@ const Datastore = require('nedb'),
     autoload: true
   });
 
+client.user.setPresence({ status:'online', game: { name: 'Doomsday'} });
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 
