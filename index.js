@@ -8,11 +8,7 @@ const Datastore = require('nedb'),
     autoload: true
   });
 
-client.user.setActivity('YouTube', {
-    type: 'WATCHING'
-  })
-  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
-  .catch(console.error);
+
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -174,3 +170,8 @@ client.on('message', msg => {
 });
 
 client.login(config.token);
+client.user.setActivity('YouTube', {
+    type: 'WATCHING'
+  })
+  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+  .catch(console.error);
