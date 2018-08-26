@@ -10,10 +10,13 @@ const Datastore = require('nedb'),
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-	client.user.setActivity('Pretend', { type: 'PLAYING' })
-  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
-  .catch(console.error);
+  client.user.setActivity('Pretend', {
+      type: 'PLAYING'
+    })
+    .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+    .catch(console.error);
 });
+
 client.on('guildMemberAdd', member => {
   console.log(member.id);
   member.createDM().then(chan => {
@@ -157,6 +160,23 @@ client.on('message', msg => {
           "!listroles : Lists the server's available roles\n" +
           "\n";
         msg.reply(help);
+        break;
+      case 'purge':
+        if (msg.author.id == '168776730541031424') {
+          if (msg.channel.type == 'text') {
+            msg.channel.fetchMessages()
+              .then(messages => {
+                msg.channel.bulkDelete(messages);
+                messagesDeleted = messages.array().length; // number of messages deleted
+                msg.channel.sendMessage("Deletion of messages successful. Total messages deleted: " + messagesDeleted);
+                console.log('Deletion of messages successful. Total messages deleted: ' + messagesDeleted)
+              })
+              .catch(err => {
+                console.log('Error while doing Bulk Delete');
+                console.log(err);
+              });
+          }
+        }
         break;
       default:
         msg.delete();
