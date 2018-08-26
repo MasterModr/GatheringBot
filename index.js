@@ -8,8 +8,6 @@ const Datastore = require('nedb'),
     autoload: true
   });
 
-
-
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 	client.user.setActivity('Pretend', { type: 'PLAYING' })
