@@ -12,6 +12,9 @@ const Datastore = require('nedb'),
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+	client.user.setActivity('Pretend', { type: 'PLAYING' })
+  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+  .catch(console.error);
 });
 client.on('guildMemberAdd', member => {
   console.log(member.id);
