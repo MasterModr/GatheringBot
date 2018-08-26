@@ -155,7 +155,7 @@ client.on('message', msg => {
           "!getroles : Lists the roles you have added\n" +
           "\n" +
           "!listroles : Lists the server's available roles\n" +
-          "test\n";
+          "\n";
         msg.reply(help);
         break;
       default:
