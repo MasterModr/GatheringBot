@@ -8,10 +8,11 @@ const Datastore = require('nedb'),
     autoload: true
   });
 
-
-
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+	client.user.setActivity('Pretend', { type: 'PLAYING' })
+  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+  .catch(console.error);
 });
 client.on('guildMemberAdd', member => {
   console.log(member.id);
@@ -154,7 +155,7 @@ client.on('message', msg => {
           "!getroles : Lists the roles you have added\n" +
           "\n" +
           "!listroles : Lists the server's available roles\n" +
-          "\n";
+          "test\n";
         msg.reply(help);
         break;
       default:
