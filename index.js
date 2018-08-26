@@ -125,7 +125,7 @@ client.on('message', msg => {
 
         }
         break;
-      case 'setNick':
+      /*case 'setNick':
         if (args[0] == null) {
           msg.reply("Please Specify a Nickname");
           break;
@@ -142,7 +142,7 @@ client.on('message', msg => {
               msg.reply("Could not add role");
             }
           });
-      break;
+      break;*/
       case 'addrole':
         if (args[0] == null) {
           msg.reply("Please Specify a role");
@@ -156,7 +156,7 @@ client.on('message', msg => {
           })
           .catch(function(error) {
             if (error.message === "Missing Permissions") {
-              msg.channel.send("Hey everyone, " + msg.author + " just tried to do something silly!");
+              msg.reply("Hey everyone, " + msg.author + " just tried to do something silly!");
             } else {
               msg.reply("Could not add role");
             }
