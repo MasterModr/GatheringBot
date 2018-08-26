@@ -8,12 +8,16 @@ const Datastore = require('nedb'),
     autoload: true
   });
 
+client.user.setActivity('YouTube', {
+    type: 'WATCHING'
+  })
+  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+  .catch(console.error);
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 
 });
-client.user.setPresence({ status:'online', game: { name: 'Doomsday'} });
 client.on('guildMemberAdd', member => {
   console.log(member.id);
   member.createDM().then(chan => {
