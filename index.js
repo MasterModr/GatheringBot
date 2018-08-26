@@ -168,7 +168,7 @@ client.on('message', msg => {
               .then(messages => {
                 msg.channel.bulkDelete(messages);
                 messagesDeleted = messages.array().length; // number of messages deleted
-                msg.channel.sendMessage("Deletion of messages successful. Total messages deleted: " + messagesDeleted);
+                //msg.channel.sendMessage("Deletion of messages successful. Total messages deleted: " + messagesDeleted);
                 console.log('Deletion of messages successful. Total messages deleted: ' + messagesDeleted)
               })
               .catch(err => {
