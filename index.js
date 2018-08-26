@@ -8,11 +8,11 @@ const Datastore = require('nedb'),
     autoload: true
   });
 
+
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-
 });
-
 client.on('guildMemberAdd', member => {
   console.log(member.id);
   member.createDM().then(chan => {
@@ -35,7 +35,7 @@ client.on('guildMemberAdd', member => {
 
 client.on('message', msg => {
 
-  if (msg.channel.id != "483096899726082053") {
+  if (msg.channel.id != config.botchannel) {
     console.log("false");
     return;
   };
