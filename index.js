@@ -1,6 +1,6 @@
 //Dependencies
 const Discord = require('discord.js');
-const restcall = require('node-rest-client').Client;
+const rest = require('node-rest-client').Client;
 const config = require("./config.json");
 const Datastore = require('nedb');
 
@@ -10,6 +10,7 @@ const db = new Datastore({
   filename: 'data/datafile',
   autoload: true
 });
+const restcall = new rest();
 
 //start bot
 client.on('ready', () => {
@@ -51,13 +52,13 @@ client.on('message', msg => {
   };
   console.log(msg.content);
   if (msg.content.substring(0, 1) == config.prefix) {
-    var args = msg.content.substring(1).split(' ');
-    var cmd = args[0];
+    let args = msg.content.substring(1).split(' ');
+    let cmd = args[0];
 
     args = args.splice(1);
     switch (cmd) {
       case 'getuser':
-        var userID = msg.author.id;
+        let userID = msg.author.id;
         db.find({
           userID: userID
         }, function(err, docs) {
@@ -74,21 +75,75 @@ client.on('message', msg => {
           msg.reply("Please Specify a username");
           break;
         } else {
-          var userID = msg.author.id;
+          let userID = msg.author.id;
+          let userN = args.join(' ');
           db.remove({
             userID: userID
           }, {
             multi: true
           }, function(err, numRemoved) {});
-          var doc = {
+          let doc = {
             userID: userID,
-            userN: args[0]
+            userN: userN
           };
           db.insert(doc, function(err, newDoc) {
-            msg.reply("Username set to: " + args[0]);
+            msg.reply("Username set to: " + userN);
           });
         }
         break;
+      case 'tradelist':
+        if (args[0] == null) {
+          msg.reply("Please Specify a user");
+          break;
+        } else {
+          let username = args.join(' ').substring(2,(args.join(' ').length - 1));
+          msg.guild.fetchMember(username)
+          .then(member => {
+            db.find({
+              userID: member.id
+            }, function(err, docs) {
+              if (docs[0] != null) {
+                let user = docs[0].userN;
+                restcall.get(("https://deckbox-api.herokuapp.com/api/users/" + user), function (data, response) {
+                  let sets = data.sets;
+                  console.log(sets);
+                  let tradelist = 0;
+                  sets.forEach(function(item, index, array) {
+                    if(item.name == 'tradelist'){
+                      tradelist = item.id;
+                    }
+                  });
+                  console.log(tradelist);
+                  msg.reply('https://deckbox.org/sets/' + tradelist);
+                });
+              } else {
+                msg.reply("They have not set a username");
+              }
+            });
+          });
+
+
+        }
+        break;
+      case 'setNick':
+        if (args[0] == null) {
+          msg.reply("Please Specify a Nickname");
+          break;
+        }
+        if()
+        let nick = args.join(' ');
+        msg.member.setNickname(nick)
+          .then(function(value) {
+            msg.reply("Nickname set to " + nick);
+          })
+          .catch(function(error) {
+            if (error.message === "Missing Permissions") {
+              msg.channel.send("Your Role is too high for the bot to set you Nick please do it youself.");
+            } else {
+              msg.reply("Could not add role");
+            }
+          });
+      break;
       case 'addrole':
         if (args[0] == null) {
           msg.reply("Please Specify a role");
@@ -139,7 +194,7 @@ client.on('message', msg => {
         msg.reply(list);
         break;
       case 'listroles':
-        msg.guild.fetchMember("481853659898970114")
+        msg.guild.fetchMember(config.botid)
           .then(member => {
             let botrole = member.highestRole.calculatedPosition;
             let roles = msg.guild.roles.array();
@@ -172,7 +227,7 @@ client.on('message', msg => {
           if (msg.channel.type == 'text') {
             msg.channel.fetchMessages()
               .then(messages => {
-                msg.channel.bulkDelete(messages);
+                msg.channel.bulkDelete(messages,true);
                 messagesDeleted = messages.array().length; // number of messages deleted
                 //msg.channel.sendMessage("Deletion of messages successful. Total messages deleted: " + messagesDeleted);
                 console.log('Deletion of messages successful. Total messages deleted: ' + messagesDeleted)
