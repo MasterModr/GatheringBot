@@ -130,7 +130,6 @@ client.on('message', msg => {
           msg.reply("Please Specify a Nickname");
           break;
         }
-        if()
         let nick = args.join(' ');
         msg.member.setNickname(nick)
           .then(function(value) {
