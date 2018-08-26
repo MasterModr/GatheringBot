@@ -1,13 +1,17 @@
+//Dependencies
 const Discord = require('discord.js');
-const client = new Discord.Client();
 const restcall = require('node-rest-client').Client;
 const config = require("./config.json");
-const Datastore = require('nedb'),
-  db = new Datastore({
-    filename: 'data/datafile',
-    autoload: true
-  });
+const Datastore = require('nedb');
 
+//setup
+const client = new Discord.Client();
+const db = new Datastore({
+  filename: 'data/datafile',
+  autoload: true
+});
+
+//start bot
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setActivity('Pretend', {
@@ -17,6 +21,7 @@ client.on('ready', () => {
     .catch(console.error);
 });
 
+//new user join
 client.on('guildMemberAdd', member => {
   console.log(member.id);
   member.createDM().then(chan => {
@@ -37,6 +42,7 @@ client.on('guildMemberAdd', member => {
   });
 });
 
+//command handler
 client.on('message', msg => {
 
   if (msg.channel.id != config.botchannel) {
@@ -189,4 +195,5 @@ client.on('message', msg => {
   }
 });
 
+//login
 client.login(config.token);
