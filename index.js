@@ -12,12 +12,7 @@ const Datastore = require('nedb'),
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-	client.user.setActivity('YouTube', {
-	    type: 'WATCHING'
-	  })
-	  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
-	  .catch(console.error);
-
+	client.user.setActivity({game: {name: "with my code", type: 0}});
 });
 client.on('guildMemberAdd', member => {
   console.log(member.id);
@@ -41,7 +36,7 @@ client.on('guildMemberAdd', member => {
 
 client.on('message', msg => {
 
-  if (msg.channel.id != "483096899726082053") {
+  if (msg.channel.id != config.botchannel) {
     console.log("false");
     return;
   };
