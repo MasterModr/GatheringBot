@@ -8,12 +8,12 @@ const Datastore = require('nedb'),
     autoload: true
   });
 
-client.user.setPresence({ status:'online', game: { name: 'Doomsday'} });
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 
 });
-
+client.user.setPresence({ status:'online', game: { name: 'Doomsday'} });
 client.on('guildMemberAdd', member => {
   console.log(member.id);
   member.createDM().then(chan => {
