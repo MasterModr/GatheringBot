@@ -57,7 +57,7 @@ client.on('message', msg => {
 
     args = args.splice(1);
     switch (cmd) {
-      case 'getuser':
+      /*case 'gettradeuser':
         let userID = msg.author.id;
         db.find({
           userID: userID
@@ -70,7 +70,7 @@ client.on('message', msg => {
         });
 
         break;
-      case 'setuser':
+      case 'settradeuser':
         if (args[0] == null) {
           msg.reply("Please Specify a username");
           break;
@@ -125,7 +125,41 @@ client.on('message', msg => {
 
         }
         break;
-      /*case 'setNick':
+        case 'wishlist':
+          if (args[0] == null) {
+            msg.reply("Please Specify a user");
+            break;
+          } else {
+            let username = args.join(' ').substring(2,(args.join(' ').length - 1));
+            msg.guild.fetchMember(username)
+            .then(member => {
+              db.find({
+                userID: member.id
+              }, function(err, docs) {
+                if (docs[0] != null) {
+                  let user = docs[0].userN;
+                  restcall.get(("https://deckbox-api.herokuapp.com/api/users/" + user), function (data, response) {
+                    let sets = data.sets;
+                    console.log(sets);
+                    let wishlist = 0;
+                    sets.forEach(function(item, index, array) {
+                      if(item.name == 'wishlist'){
+                        wishlist = item.id;
+                      }
+                    });
+                    console.log(wishlist);
+                    msg.reply('https://deckbox.org/sets/' + wishlist);
+                  });
+                } else {
+                  msg.reply("They have not set a username");
+                }
+              });
+            });
+
+
+          }
+          break;
+      case 'setNick':
         if (args[0] == null) {
           msg.reply("Please Specify a Nickname");
           break;
