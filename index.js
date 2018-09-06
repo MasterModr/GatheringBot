@@ -45,7 +45,7 @@ client.on('guildMemberAdd', member => {
 
 //command handler
 client.on('message', msg => {
-  console.log(msg.content);
+  console.log("Channel: "msg.channel.name + ", Sender: " + msg.author.username + ", Message: " msg.msg.content);
   if (msg.channel.id != config.botchannel) {
     return;
   };
