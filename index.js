@@ -15,7 +15,7 @@ const restcall = new rest();
 //start bot
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity('Pretend', {
+  client.user.setActivity('Battle of Wits', {
       type: 'PLAYING'
     })
     .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
