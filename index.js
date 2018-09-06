@@ -45,11 +45,11 @@ client.on('guildMemberAdd', member => {
 
 //command handler
 client.on('message', msg => {
-
+  console.log(msg.content);
   if (msg.channel.id != config.botchannel) {
     return;
   };
-  console.log(msg.content);
+
   if (msg.content.substring(0, 1) == config.prefix) {
     let args = msg.content.substring(1).split(' ');
     let cmd = args[0];
