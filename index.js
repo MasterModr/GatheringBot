@@ -47,7 +47,6 @@ client.on('guildMemberAdd', member => {
 client.on('message', msg => {
 
   if (msg.channel.id != config.botchannel) {
-    console.log("false");
     return;
   };
   console.log(msg.content);
@@ -272,6 +271,10 @@ client.on('message', msg => {
           }
         }
         break;
+
+      case 'notifications':
+        msg.reply('https://imgur.com/a/eeSJQJy');
+      break;
       default:
         msg.delete();
         break;
