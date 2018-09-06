@@ -56,7 +56,7 @@ client.on('message', msg => {
 
     args = args.splice(1);
     switch (cmd) {
-      /*case 'gettradeuser':
+      case 'gettradeuser':
         let userID = msg.author.id;
         db.find({
           userID: userID
@@ -158,7 +158,7 @@ client.on('message', msg => {
 
           }
           break;
-      case 'setNick':
+      /*case 'setNick':
         if (args[0] == null) {
           msg.reply("Please Specify a Nickname");
           break;
@@ -271,6 +271,10 @@ client.on('message', msg => {
           }
         }
         break;
+
+      case 'notifications':
+        msg.reply('https://imgur.com/a/eeSJQJy');
+      break;
       default:
         msg.delete();
         break;
