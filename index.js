@@ -45,6 +45,9 @@ client.on('guildMemberAdd', member => {
 
 //command handler
 client.on('message', msg => {
+  if(msg.content.toLowerCase().includes("perfectly balanced")){
+    msg.channel.send("As all things should be.");
+  };
   console.log("Channel: " + msg.channel.name + ", Sender: " + msg.author.username + ", Message: " + msg.content);
   if (msg.channel.id != config.botchannel) {
     return;
